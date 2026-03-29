@@ -41,7 +41,7 @@
 (add-hook 'vterm-mode-hook
           (lambda ()
             (display-line-numbers-mode -1)))
-(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+;; (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
 
 ;; Set priorities of using melpa-stable.
@@ -89,7 +89,7 @@
           ))
 
   ;; do not show things such as #+TITLE, as that is distracting.
-  (setq org-hidden-keywords '())
+  (setq org-hidden-keywords '(title subtitle author date email))
   (setq org-hide-leading-stars t)
   (setq org-hide-emphasis-markers t)
 
@@ -186,12 +186,14 @@
           (border-mode-line-active bg-magenta-intense)))
   )
 
-;; (use-package spacemacs-theme
-;;   :ensure t
-;;   :init
-;;   (setq spacemacs-theme-comment-bg nil)
-;;   )
-
+(use-package modus-themes
+  :ensure t
+  :config
+  (setq modus-themes-common-palette-overrides
+        '((bg-mode-line-active bg-lavender)
+          (fg-mode-line-active fg-main)
+          (border-mode-line-active bg-magenta-intense)))
+  (load-theme 'modus-vivendi t))
 (use-package ef-themes
   :ensure t
   )
@@ -305,7 +307,8 @@
   ;; still visible.
   (setq ivy-truncate-lines nil)
   )
-
+;; Ignora lo zoom del buffer corrente nel posframe
+(setq posframe-text-scale-factor-function (lambda (_) 0))
 
 (use-package ivy-posframe
   :ensure t
@@ -492,8 +495,8 @@ useful for example when watching YouTube videos."
 		'("\\.zip\\'" ".zip" "unzip")))
 
 ;; Set font to be used
-(add-to-list 'default-frame-alist '(font . "Liberation Mono"))
-(set-face-attribute 'default t :font "Liberation Mono")
+(add-to-list 'default-frame-alist '(font . "Liberation mono"))
+(set-face-attribute 'default t :font "Liberation mono")
 
 (setq resize-mini-windows 'grow-only)
 
@@ -667,7 +670,7 @@ useful for example when watching YouTube videos."
 ;; (DISABLED: multi-vterm caused autoload error)
 ;;  (switch-to-buffer "*scratch*")
 ;; (multi-vterm)
-;;  (setq display-line-numbers nil)
+(global-display-line-numbers-mode -1)
   
 
 (provide 'init)
@@ -677,9 +680,11 @@ useful for example when watching YouTube videos."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(spacemacs-dark))
+ '(custom-enabled-themes '(modus-vivendi))
  '(custom-safe-themes
-   '("02f57ef0a20b7f61adce51445b68b2a7e832648ce2e7efb19d217b6454c1b644"
+   '("8eabe9aa600059ad7c1c110c35a98f8601b17d3f44efc526250671ad5b5ac1cf"
+     "6dcf1ca4c7432773084b9d52649ee5eb2c663131c4c06859f648dea98d9acb3e"
+     "02f57ef0a20b7f61adce51445b68b2a7e832648ce2e7efb19d217b6454c1b644"
      "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476"
      "5259cf3d5062ea1b0de4f5a3c550b55e2c4a347b19fa874c8522e6171e6a4840"
      default))
